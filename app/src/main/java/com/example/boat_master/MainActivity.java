@@ -22,10 +22,9 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity {
 
     private EditText Boat_name;
-    private Button showbtn;
-    private TextView textView;
-    private TextView boatnotregistered;
-    String boatMasterSearch = "http://103.127.31.139:7080/test/BoatMasterSearch";
+    private Button show_btn,Boat_AddScreen;
+    private TextView text_View;
+   // String boatMasterSearch = "http://103.127.31.139:7080/test/BoatMasterSearch";
 
 
     @Override
@@ -34,12 +33,11 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
-        textView =findViewById(R.id.textView);
-        Button showbtn = (Button) findViewById(R.id.showbtn);
-        TextView boatnotregistered = (TextView) findViewById(R.id.boatnotregistered);
-        Spinner myspinner = (Spinner) findViewById(R.id.spinner);
+        text_View = findViewById(R.id.textView);
+        show_btn = (Button) findViewById(R.id.showbtn);
+        Boat_AddScreen = (Button)findViewById(R.id.BoatAddScreen);
 
-        boatnotregistered.setOnClickListener(new View.OnClickListener() {
+       Boat_AddScreen .setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -47,18 +45,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        showbtn.setOnClickListener(new View.OnClickListener() {
+        show_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 Postdata();
             }
         });
-
-        ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.names));
-        myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
-        myspinner.setAdapter(myAdapter);
-
     }
 
     private void Postdata() {
@@ -68,8 +61,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 try {
-                    System.out.println(response);
-                    //textView.setText("Post Data : " + response);
+                    text_View.setText("Post Data : " + response);
                 }catch (NullPointerException nullPointerException){
                     nullPointerException.printStackTrace();
                 }
@@ -77,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
             }}, new Response.ErrorListener(){
                 @Override
                 public void onErrorResponse(VolleyError error){
-                   // textView.setText("Post Data : Response Failed ");
+                   text_View.setText("Post Data : Response Failed ");
 
                 }
             })
