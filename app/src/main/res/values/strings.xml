@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Boat_Master</string>
+    <string name="BoatName">BoatName</string>
+    <string name="official_number">Official_number</string>
+    <string name="Survey_date">survey_date</string>
+    <string name="boat_id">boat_id</string>
+    <string-array name="names">
+        <item>Survey</item>
+
+        <item>Fishing</item>
+
+        <item>Passenger</item>
+    </string-array>
+</resources>
