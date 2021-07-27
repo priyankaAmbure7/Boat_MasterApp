@@ -36,6 +36,7 @@ public class BoatAddScreen extends AppCompatActivity {
     private EditText officialnumber, surveydate, boatid;
     private EditText Boat_name;
     private TextView selectboat_type;
+
     private Button Add_btn;
     String bname, btype, bofficialnum, bdateofsurvey, bid, boatType;
     int year;
@@ -45,13 +46,15 @@ public class BoatAddScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_boat_add_screen);
-        Add_btn = (Button) findViewById(R.id.Addbtn);
 
+
+        Add_btn = (Button) findViewById(R.id.Addbtn);
         Spinner myspinner = (Spinner) findViewById(R.id.spinner);
         surveydate = (EditText) findViewById(R.id.survey_date);
         officialnumber = (EditText) findViewById(R.id.Official_number);
         Boat_name = (EditText) findViewById(R.id.boat_name);
         boatid = (EditText) findViewById(R.id.boat_id);
+
 
         Calendar calendar = Calendar.getInstance();
         final int year = calendar.get(calendar.YEAR);
@@ -142,8 +145,8 @@ public class BoatAddScreen extends AppCompatActivity {
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-
-                    Toast.makeText(getApplicationContext(), "Error !2" + error, Toast.LENGTH_LONG).show();
+                    
+                   Toast.makeText(getApplicationContext(), "Error !2" + error, Toast.LENGTH_LONG).show();
                 }
             }) {
                 @Override
