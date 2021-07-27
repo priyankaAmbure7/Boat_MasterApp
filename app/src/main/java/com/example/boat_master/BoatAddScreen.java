@@ -25,6 +25,7 @@ import com.android.volley.toolbox.Volley;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Calendar;
@@ -70,7 +71,8 @@ public class BoatAddScreen extends AppCompatActivity {
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                         month = month + 1;
                         String date = dayOfMonth + "/" + month + "/" + year;
-                        surveydate.setText(date);
+                        bdateofsurvey = year+"-"+month+"-"+day+" 9:00";
+                        surveydate.setText(bdateofsurvey);
                     }
                 }, year, month, day);
                 datePickerDialog.show();
@@ -107,8 +109,8 @@ public class BoatAddScreen extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),
                             "Please Enter Valid Survey Date", Toast.LENGTH_LONG).show();
                 } else {
-                    SimpleDateFormat sm = new SimpleDateFormat("yyyy-MM-dd HH:mm:s");
-                    bdateofsurvey = sm.format(bdateofsurvey);
+//                    SimpleDateFormat sm = new SimpleDateFormat("yyyy-MM-dd");
+//                    bdateofsurvey = sm.format(bdateofsurvey).concat("9:00");
                 }
             } else if (btypeDesc.equals("Fishing")) {
                 boatType = "FI";
@@ -123,21 +125,27 @@ public class BoatAddScreen extends AppCompatActivity {
             StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
-                    Log.e("anyText", response);
+                   Log.e("anyText", response);
 
                     try {
                         JSONObject jsonObject = new JSONObject(response);
-                        String message = jsonObject.getString("message");
+                        Log.e("tag", "onResponse: "+jsonObject );
 
-                        if (message.contains("Success")) {
+                        String message = jsonObject.getString("message");
+                        Log.e("tag", "onResponse: "+message );
+//                        Toast.makeText(getApplicationContext(), jsonObject.toString(), Toast.LENGTH_LONG).show();
+//
+                        if (message.contains("success")) {
+
                             Toast.makeText(getApplicationContext(), "Data Successfully Added", Toast.LENGTH_LONG).show();
+
                         }
-                        if (message.contains("Fail")) {
+                        else if (message.contains("fail")) {
                             Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
                         }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
+                    } catch (JSONException e) {
+                      //  e.printStackTrace();
+                        Toast.makeText(getApplicationContext(), "Server Error", Toast.LENGTH_LONG).show();
 
                     }
 
@@ -152,16 +160,18 @@ public class BoatAddScreen extends AppCompatActivity {
                 @Override
                 protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<String, String>();
+
+                    //int companyId = 3;
+                   // String companyName = "C"+(00001+companyId);
                     params.put("company_id", "C00001");
                     params.put("branch_id", "B00037");
-                    params.put("fin_year", "2010");
+                    params.put("fin_year", "2021");
                     params.put("emp_name", "Priyanka");
                     params.put("boat_name", bname);
-                    params.put("boat_type", boatType);
+                    params.put("boat_type", btype);
                     params.put("boat_id", bid);
                     params.put("s_date", bdateofsurvey);
                     params.put("official_number", bofficialnum);
-
                     return params;
                 }
             };
